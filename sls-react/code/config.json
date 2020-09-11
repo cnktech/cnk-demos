@@ -1,0 +1,11 @@
+{
+    "prod": {
+        "BUCKET_NAME": "sls-react-demo-prod"
+    },
+    "qa": {
+        "BUCKET_NAME": "sls-react-demo-qa"
+    },
+    "dev": {
+        "BUCKET_NAME": "sls-react-demo-dev"
+    }
+}

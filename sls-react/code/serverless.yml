@@ -1,0 +1,16 @@
+service: demo-sls-react
+
+provider:
+    name: aws
+    stage: ${opt:stage, 'dev'}
+    runtime: nodejs12.x
+
+plugins:
+    - serverless-finch
+
+custom:
+    client:
+        bucketName: ${file(./config.json):${opt:stage, 'dev'}.BUCKET_NAME}
+        distributionFolder: /build
+        indexDocument: index.html
+        errorDocument: index.html
