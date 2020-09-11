@@ -1,0 +1,55 @@
+name: Master Branch
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: "12"
+                  always-auth: true
+                  registry-url: "https://npm.pkg.github.com"
+                  scope: "@cnktech"
+
+            - name: Cache node modules
+              uses: actions/cache@v2
+              env:
+                  cache-name: cache-node-modules
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
+
+            - name: Install Dependencies
+              run: npm install
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.PACKAGE_ACCESS_TOKEN }}
+
+            # - - - - - - - - - - - - - - - - - - - -
+            # 1. Lint Code
+            # - - - - - - - - - - - - - - - - - - - -
+            - run: npm run ci-lint
+
+            # - - - - - - - - - - - - - - - - - - - -
+            # 2. Test Code
+            # - - - - - - - - - - - - - - - - - - - -
+            - run: npm run ci-test-unit
+
+            # - - - - - - - - - - - - - - - - - - - -
+            # 3. Deploy Code
+            # - - - - - - - - - - - - - - - - - - - -
+            - run: sls deploy
+            - run: npm install -g serverless
+            - run: serverless config credentials --provider aws --key ${{secrets.CNK_AWS_KEY}} --secret ${{secrets.CNK_AWS_SECRET}}
+            - run: npm run ci-deploy-staging
