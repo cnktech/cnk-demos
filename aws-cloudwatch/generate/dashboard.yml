@@ -1,0 +1,19 @@
+Resources:
+    MyDashboard:
+        Type: AWS::CloudWatch::Dashboard
+        Properties:
+        DashboardBody: >-
+            '{
+               "start": "-PT6H",
+               "periodOverride": "inherit",
+               "widgets": [
+                  {
+                     "type":"metric",
+                     "x":0,
+                     "y":0,
+                     "width":24,
+                     "height":6,
+                     "properties": {"metrics":[["AWS/Lambda","Errors","FunctionName","code-dev-hello"]],"view":"timeSeries","stacked":false,"region":"us-east-1","stat":"Average","period":3600}
+               }]
+            }'
+        DashboardName: exampledash
