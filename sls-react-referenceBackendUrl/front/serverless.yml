@@ -1,0 +1,30 @@
+service: slsenv-front
+
+frameworkVersion: "2"
+
+plugins:
+    - serverless-build-client
+    - serverless-finch
+
+provider:
+    name: aws
+    runtime: nodejs12.x
+
+custom:
+    s3BucketNames:
+        dev: cnk-demo-react-bucket-dev
+        qa: cnk-demo-react-bucket-qa
+        prod: cnk-demo-react-bucket-prod
+
+    buildClient:
+        packager: npm
+        command: run build
+        verbose: true
+        environment:
+            REACT_APP_BACKEND_ENDPOINT: ${cf:slsenv-back-dev.ServiceEndpoint}
+
+    client:
+        bucketName: ${self:custom.s3BucketNames.${opt:stage, 'dev'}}
+        distributionFolder: /build
+        indexDocument: index.html
+        errorDocument: index.html
