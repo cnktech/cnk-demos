@@ -1,0 +1,22 @@
+service: shared-serviceA
+
+frameworkVersion: "2"
+
+provider:
+    name: aws
+    runtime: nodejs12.x
+
+functions:
+    hello:
+        handler: handler.hello
+        events:
+            - http:
+                  path: get
+                  method: get
+
+resources:
+    Outputs:
+        myOutput:
+            Value: helloFromServiceA
+        url:
+            Value: !Sub "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/${self:provider.stage}"

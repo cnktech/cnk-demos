@@ -1,0 +1,18 @@
+service: shared-serviceB
+
+frameworkVersion: "2"
+
+provider:
+    name: aws
+    runtime: nodejs12.x
+    environment:
+        SERVICE_A_URL: ${cf:shared-serviceA-${self:provider.stage}.url}
+        OUTPUT: ${cf:shared-serviceA-${self:provider.stage}.myOutput}
+
+functions:
+    hello:
+        handler: handler.hello
+        events:
+            - http:
+                  path: get
+                  method: get
