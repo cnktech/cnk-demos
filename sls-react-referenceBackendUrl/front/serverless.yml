@@ -12,9 +12,9 @@ provider:
 
 custom:
     s3BucketNames:
-        dev: cnk-demo-react-bucket-dev
-        qa: cnk-demo-react-bucket-qa
-        prod: cnk-demo-react-bucket-prod
+        dev: "${ssm:/s3prefix}-cnk-demo-react-dev"
+        qa: "${ssm:/s3prefix}-cnk-demo-react-qa"
+        prod: "${ssm:/s3prefix}-cnk-demo-react-prod"
 
     buildClient:
         packager: npm
@@ -24,7 +24,7 @@ custom:
             REACT_APP_BACKEND_ENDPOINT: ${cf:slsenv-back-dev.ServiceEndpoint}
 
     client:
-        bucketName: ${self:custom.s3BucketNames.${opt:stage, 'dev'}}
+        bucketName: ${self:custom.s3BucketNames.dev}
         distributionFolder: /build
         indexDocument: index.html
         errorDocument: index.html
