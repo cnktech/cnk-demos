@@ -1,5 +1,7 @@
 # ESLint / Prettier Configuration
 
+*** to-do: create demo video
+
 We decided to use ESLint for linting and Prettier for formatting in our projects. Both of these need to be installed as extensions in Visual Studio Code and locally in our projects. ESLint and Prettier will also have their own config files where we store our preferred settings.
 
 I set up a new example React project to show how we configure ESLint and Prettier with React. You can see my steps below, and you may view the sample files in the “code” folder.
