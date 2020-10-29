@@ -41,7 +41,7 @@ In our package.json, we want to have this in our scripts, so we can run it in th
 And include this Husky config as well:
 `"husky": { "hooks": { "pre-push": "npm run lint" } }`
 
-### Links
+## Links
 
 [Prettier Docs](https://prettier.io/docs/en/install.html)
 
