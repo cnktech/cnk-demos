@@ -4,9 +4,9 @@
 
 We decided to use ESLint for linting and Prettier for formatting in our projects. Both of these need to be installed as extensions in Visual Studio Code and locally in our projects. ESLint and Prettier will also have their own config files where we store our preferred settings.
 
-I set up a new example React project to show how we configure ESLint and Prettier with React. You can see my steps below, and you may view the sample files in the “code” folder.
+I set up a **new example React project** to show how we configure ESLint and Prettier with React (note: we do not have to go through all of these steps on an already existing CNK project). You can see my steps below, and you may view the sample files in the “code” folder.
 
-## Steps:
+## Steps (for brand new React app):
 
 1. Create folder for new app and open in VS Code
 2. Open terminal and run command `npx create-react-app . ` to create app directly in your folder
@@ -26,6 +26,9 @@ I set up a new example React project to show how we configure ESLint and Prettie
     - Ensure “Format on Save Mode” is set to “File”
     - In the search bar search for“default formatter” and in the dropdown select “esbenp.prettier-vscode”
         - This allows prettier to format all our file types
+
+For set-up in **already existing CNK projects**, make sure you have installed “ESLint” and “Prettier - Code formatter” in VS Code Extensions tab. When you first clone a project repo onto your machine, run `npm install` to install all packages included in the project. ESLint and Prettier should already be there.
+
 
 ## ESLint can extend Prettier rules
 
