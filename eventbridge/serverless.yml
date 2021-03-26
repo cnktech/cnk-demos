@@ -1,0 +1,42 @@
+service: eventbridge-demo
+
+frameworkVersion: '2'
+
+provider:
+    name: aws
+    runtime: nodejs12.x
+    iamRoleStatements:
+        - Effect: 'Allow'
+          Action:
+              - 'events:*'
+          Resource: !Sub 'arn:aws:events:${AWS::Region}:${AWS::AccountId}:event-bus/*'
+
+    environment:
+        EVENTBUS: ${cf:eventbridge-demo-dev.EventBridgeArn}
+
+functions:
+    first:
+        handler: handler.first
+
+    second:
+        handler: handler.second
+        events:
+            - eventBridge:
+                  eventBus: ${cf:eventbridge-demo-dev.EventBridgeArn}
+                  pattern:
+                      source:
+                          - custom.eventBridgeDemoService
+                      detail-type:
+                          - firstFunctionHappened
+resources:
+    Resources:
+        MyEventBus:
+            Type: AWS::Events::EventBus
+            Properties:
+                Name: MyTestEventBus
+
+    Outputs:
+        EventBridgeArn:
+            Value: !GetAtt MyEventBus.Arn
+            Export:
+                Name: EventBridgeArn
